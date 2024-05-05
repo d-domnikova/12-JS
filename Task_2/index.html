@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deliveries</title>
+    <style>
+        table, td, th { border: 1px solid black; }
+        table { border-collapse: collapse; } 
+    </style>
+</head>
+<body style="margin: 20px;">
+    <h1>Облік товарів</h1>
+
+    <table style="width: 70%;" id="tbl">
+        <tr>
+            <th>Найменування товару</th>
+            <th>Ціна за одиницю</th>
+            <th>Кількість</th>
+            <th>Вартість</th>
+        </tr>
+        <tr id="tableForWork">
+            <td>Стіл письмовий</td>
+            <td>12000</td>
+            <td>5</td>
+            <td></td>
+        </tr>
+        <tr id="tableForKitchen">
+            <td>Стіл кухоний</td>
+            <td>8000</td>
+            <td>10</td>
+            <td></td>
+        </tr>
+        <tr id="chair">
+            <td>Стілець</td>
+            <td>20</td>
+            <td>1200</td>
+            <td></td>
+        </tr>
+        <tr id="shelf">
+            <td>Шафа для книжок</td>
+            <td>14200</td>
+            <td>4</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>Загалом</b></td>
+            <td id="sum"></td>
+        </tr>
+    </table>
+    <br>
+    <h3>Зміна ціни та кількості</h3>
+    <label for="item">Товар</label><br>
+    <select id="item">
+        <option value="tableForWork">Стіл письмовий</option>
+        <option value="tableForKitchen">Стіл кухоний</option>
+        <option value="chair">Стілець</option>
+        <option value="shelf">Шафа для книжок</option>
+    </select>
+    <br><br>
+    <label for="price">Ціна</label><br>
+    <input id="price" type="number">
+    <br><br>
+    <label for="amount">Кількість</label><br>
+    <input id="amount" type="number">
+    <br><br>
+    <input type="submit" id="button" onclick="changeValues()">
+ 
+    <script>
+        window.addEventListener('load', calculateSum);
+        const table = document.getElementById("tbl");
+    
+        function calculateSum(){
+            var row = table.rows;
+            var sum = 0;
+
+            for(var i = 1; i < row.length-1; i++){
+                row[i].cells[3].innerHTML = parseInt(row[i].cells[1].innerHTML) * parseInt(row[i].cells[2].innerHTML);
+                sum += parseInt(row[i].cells[3].innerHTML)
+            }
+            row[5].cells[1].innerHTML = sum;
+        }
+    
+        function changeValues(){
+            var price = document.getElementById("price").value;
+            var amount = document.getElementById("amount").value;
+            var item = document.getElementById("item").value;
+            var row = table.rows.namedItem(item)
+    
+            price != 0 ? row.cells[1].innerHTML = price : '';
+            amount !=0 ? row.cells[2].innerHTML = amount : '';
+    
+            calculateSum();
+        }
+    </script>
+</body>
+</html>

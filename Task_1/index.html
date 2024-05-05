@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тригонометричні функції</title>
+</head>
+<body>
+    <h1>Тригонометричні функції</h1>
+    <form>
+        <label for="function">Функція: </label>
+        <select id="function">
+            <option value="sin">sin</option>
+            <option value="cos">cos</option>
+            <option value="tan">tan</option>
+        </select>
+        <br>
+        <p>Уведіть діапазон значень в кутах:</p>
+        <label for="start">Початок: </label>
+        <input id="start" type="number">
+        <br><br>
+        <label for="end">Кінець: </label>
+        <input id="end" type="number">
+        <br><br>
+        <label for="step">Крок: </label>
+        <input id="step">
+        <br><br>
+        <input type="submit" value="Submit" onclick="tableOfValues()">
+    </form>
+
+    <script>
+        function tableOfValues(){
+            var first = parseFloat(document.getElementById("start").value);
+            var last = parseFloat(document.getElementById("end").value);
+            var step = parseFloat(document.getElementById("step").value);
+            var functionName = document.getElementById("function").value;
+
+            var newWindow = window.open('', '', 300, 300)
+            var style = "<style>th, td {border: 1px solid black; padding: 10px;}</style>"
+            newWindow.document.write(style + "<table><tr><th colspan='2'>Кут</th><th rowspan='2'>"+ functionName + "</th></tr><tr><th>У градусах</th><th>У радіанах</th></tr>")
+
+            for (let i = first; i <= last; i+=step){
+                var radians = i * (Math.PI/180); 
+                var str = "Math." + functionName + "(" + radians + ")";
+                result = eval(str).toFixed(2);
+
+                newWindow.document.write("<tr><td>"+ i + "</td> <td>" + radians + "</td><td>" + result + "</td></tr>")
+            }
+            newWindow.document.write("</table>")
+        }
+    </script>
+</body>
+</html>
